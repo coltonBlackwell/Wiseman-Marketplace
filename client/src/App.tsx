@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Checkout } from './components/Checkout';
 import './output.css';
  
 interface Product {
@@ -46,6 +47,7 @@ function App() {
           </li>
         ))}
       </ul>
+      <Checkout/>
     </div>
   );
 }
