@@ -1,5 +1,5 @@
 import React from 'react';
 
 export function Checkout() {
-    return <h1>Testing</h1>
+    return <h1>This is the Checkout Page</h1>
 }

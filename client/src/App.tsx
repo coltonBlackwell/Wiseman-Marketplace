@@ -1,54 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Checkout } from './components/Checkout';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import { Checkout } from './pages/Checkout';
 import './output.css';
- 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-}
+
 
 function App() {
-  const [products, setProducts] = useState<Product[]>([]); // <-- typed array
-
-  useEffect(() => {
-    fetch('http://localhost:4000/api/products')
-      .then(response => response.json())
-      .then((products: Product[]) => {
-        setProducts(products);
-      })
-      .catch(err => console.error('Error:', err));
-  }, []);
-
-  const removeProduct = (id: number) => {
-    // Optionally call the backend to delete the product
-    fetch(`http://localhost:4000/api/products/${id}`, {
-      method: 'DELETE',
-    })
-      .then(response => {
-        if (response.ok) {
-          // Update UI after successful deletion
-          setProducts(prev => prev.filter(p => p.id !== id));
-        } else {
-          console.error('Failed to delete product');
-        }
-      })
-      .catch(err => console.error('Error deleting product:', err));
-  };
-
   return (
-    <div>
-      <h1>Test</h1>
-      <ul>
-        {products.map(product => (
-          <li key={product.id}>
-            {product.name} - ${product.price}
-            <button onClick={() => removeProduct(product.id)}>Remove</button>
-          </li>
-        ))}
-      </ul>
-      <Checkout/>
-    </div>
+    <Router>
+      <Navbar />
+      <br></br>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/checkout" element={<Checkout />} />
+      </Routes>
+    </Router>
   );
 }
 
