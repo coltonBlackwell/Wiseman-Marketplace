@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
  
 export interface Product {
   id: number;
@@ -7,12 +8,14 @@ export interface Product {
 }
 
 interface HomeProps {
+  products: Product[];
   setCart: React.Dispatch<React.SetStateAction<Product[]>>;
+  setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
 }
 
-function Home({ setCart }: HomeProps) {
+function Home({ products, setProducts, setCart }: HomeProps) {
 
-    const [products, setProducts] = useState<Product[]>([]); // <-- typed array
+    // const [products, setProducts] = useState<Product[]>([]); // <-- typed array
 
 
     // init show products on display when loading the page.
@@ -49,6 +52,7 @@ function Home({ setCart }: HomeProps) {
                 <li key={product.id}>
                     {product.name} - ${product.price}
                     <button onClick={() => addProduct(product.id)}>Add</button>
+                    <Link to={`/${product.id}`}>View</Link>
                 </li>
                 ))}
             </ul>
