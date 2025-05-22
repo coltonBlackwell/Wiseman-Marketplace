@@ -43,21 +43,14 @@ export function Checkout({ cart, setCart }: CheckoutProps) {
 
     return (
     <div>
-        {/* <ul>
-            {cart.map(p => (
-            <li key={p.id}>
-                {p.name} - ${p.price}
+        <ul>
+            {cart.map((product, index) => (
+            <li key={`${product.id}-${index}`}> 
+                {product.name} - ${product.price}
+                <button onClick={() => removeProduct(product.id)}>Remove</button>
             </li>
             ))}
-        </ul> */}
-            <ul>
-                {cart.map((product, index) => (
-                <li key={`${product.id}-${index}`}> 
-                    {product.name} - ${product.price}
-                    <button onClick={() => removeProduct(product.id)}>Remove</button>
-                </li>
-                ))}
-            </ul>
+        </ul>
 
     </div>
     );

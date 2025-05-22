@@ -12,11 +12,6 @@ export const addProduct = (req, res) => {
     res.json({ message: 'Product added to cart successfully', cart });
 };
 export const removeProduct = (req, res) => {
-    console.log('you hit the backend!!');
-    // console.log("***** REQ PARAMS ********", req.params.id)
-    // const id = Number(req.params.id);
-    // const index = cart.findIndex(product => product.id === id);
-    // console.log("*****CART SPLIIIICE *******", cart.splice(index, 1))
     const id = Number(req.params.id);
     const index = cart.findIndex(product => product.id === id);
     if (index !== -1) {

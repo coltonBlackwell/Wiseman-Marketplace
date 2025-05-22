@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Product } from './Home';
+import { Link } from 'react-router-dom';
 
 interface ItemProps {
   products: Product[];
@@ -10,7 +11,7 @@ interface ItemProps {
 }
 
 function Item({ products, setProducts, cart, setCart }: ItemProps) {
-    
+
   const { id } = useParams<{ id: string }>();
   const product = products.find(p => p.id === Number(id));
 
@@ -34,6 +35,8 @@ function Item({ products, setProducts, cart, setCart }: ItemProps) {
       <h2>{product.name}</h2>
       <p>Price: ${product.price}</p>
       <button onClick={addToCart}>Add to Cart</button>
+      <br></br>
+      <Link to={`/`}>go back</Link>
     </div>
   );
 }

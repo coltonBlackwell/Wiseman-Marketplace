@@ -8,8 +8,6 @@ let cart: Product[] = [
 
 export const addProduct = (req: Request, res: Response) => {
 
-  // console.log(`HHEYYYOOOO ${req.params}`)
-
   const id = Number(req.params.id);
 
   // Find the product by id
