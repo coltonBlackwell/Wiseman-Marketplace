@@ -1,3 +1,19 @@
+import express from 'express';
+import cors from 'cors';
+import productRoutes from './routes/productRoutes.js';
+import cartRoutes from './routes/cartRoutes.js'
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+app.use('/api/products', productRoutes);
+app.use('/api/cart', cartRoutes)
+
+app.listen(4000, () => {
+  console.log('Server running on http://localhost:4000');
+});
+
 // import express, { Request, Response } from 'express';
 // import cors from 'cors';
 
@@ -33,18 +49,3 @@
 // app.listen(4000, () => {
 //   console.log('Server running on http://localhost:4000');
 // });
-
-// index.ts
-import express from 'express';
-import cors from 'cors';
-import productRoutes from './routes/productRoutes.js';
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-app.use('/api/products', productRoutes);
-
-app.listen(4000, () => {
-  console.log('Server running on http://localhost:4000');
-});

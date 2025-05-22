@@ -8,45 +8,71 @@ interface Product {
 }
 
 function Home() {
-  const [products, setProducts] = useState<Product[]>([]); // <-- typed array
+    const [products, setProducts] = useState<Product[]>([]); // <-- typed array
+    const [cart, setCart] = useState<Product[]>([]); // <-- typed array
 
-  useEffect(() => {
-    fetch('http://localhost:4000/api/products')
-      .then(response => response.json())
-      .then((products: Product[]) => {
-        setProducts(products);
-      })
-      .catch(err => console.error('Error:', err));
-  }, []);
+    useEffect(() => {
+        fetch('http://localhost:4000/api/products')
+        .then(response => response.json())
+        .then((products: Product[]) => {
+            setProducts(products);
+        })
+        .catch(err => console.error('Error:', err));
+    }, []);
 
-  const removeProduct = (id: number) => {
-    // Optionally call the backend to delete the product
-    fetch(`http://localhost:4000/api/products/${id}`, {
-      method: 'DELETE',
-    })
-      .then(response => {
-        if (response.ok) {
-          // Update UI after successful deletion
-          setProducts(prev => prev.filter(p => p.id !== id));
-        } else {
-          console.error('Failed to delete product');
-        }
-      })
-      .catch(err => console.error('Error deleting product:', err));
-  };
+    const removeProduct = (id: number) => {
+        // Optionally call the backend to delete the product
+        fetch(`http://localhost:4000/api/products/${id}`, {
+        method: 'DELETE',
+        })
+        .then(response => {
+            if (response.ok) {
+            // Update UI after successful deletion
+            setProducts(prev => prev.filter(p => p.id !== id));
+            } else {
+            console.error('Failed to delete product');
+            }
+        })
+        .catch(err => console.error('Error deleting product:', err));
+    };
 
-  return (
-    <div>
-      <ul>
-        {products.map(product => (
-          <li key={product.id}>
-            {product.name} - ${product.price}
-            <button onClick={() => removeProduct(product.id)}>Remove</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+    const addProduct = (id: number) => {
+        fetch(`http://localhost:4000/api/cart/${id}`, {
+            method: 'POST',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to add product to cart');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Cart updated:', data.cart);
+                setCart(data.cart); // ✅ Update cart state here
+                })
+            .catch(err => console.error('Error:', err));
+    };
+
+    return (
+        <div>
+        <ul>
+            {products.map(product => (
+            <li key={product.id}>
+                {product.name} - ${product.price}
+                <button onClick={() => addProduct(product.id)}>Add</button>
+            </li>
+            ))}
+        </ul>
+        <br></br>
+            <ul>
+            {cart.map(product => (
+            <li key={product.id}>
+                {product.name} - ${product.price}
+            </li>
+            ))}
+        </ul>
+        </div>
+    );
 }
 
 export default Home;
