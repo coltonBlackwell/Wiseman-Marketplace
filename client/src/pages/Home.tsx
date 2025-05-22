@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 // import './output.css';
  
-interface Product {
+export interface Product {
   id: number;
   name: string;
   price: number;
 }
 
-function Home() {
-    const [products, setProducts] = useState<Product[]>([]); // <-- typed array
-    const [cart, setCart] = useState<Product[]>([]); // <-- typed array
+interface HomeProps {
+  setCart: React.Dispatch<React.SetStateAction<Product[]>>;
+}
 
+function Home({ setCart }: HomeProps) {
+
+    const [products, setProducts] = useState<Product[]>([]); // <-- typed array
+    // const [cart, setCart] = useState<Product[]>([]); // <-- typed array
+
+
+    // init show products on display when loading the page.
     useEffect(() => {
         fetch('http://localhost:4000/api/products')
         .then(response => response.json())
@@ -19,22 +26,6 @@ function Home() {
         })
         .catch(err => console.error('Error:', err));
     }, []);
-
-    const removeProduct = (id: number) => {
-        // Optionally call the backend to delete the product
-        fetch(`http://localhost:4000/api/products/${id}`, {
-        method: 'DELETE',
-        })
-        .then(response => {
-            if (response.ok) {
-            // Update UI after successful deletion
-            setProducts(prev => prev.filter(p => p.id !== id));
-            } else {
-            console.error('Failed to delete product');
-            }
-        })
-        .catch(err => console.error('Error deleting product:', err));
-    };
 
     const addProduct = (id: number) => {
         fetch(`http://localhost:4000/api/cart/${id}`, {
@@ -55,22 +46,14 @@ function Home() {
 
     return (
         <div>
-        <ul>
-            {products.map(product => (
-            <li key={product.id}>
-                {product.name} - ${product.price}
-                <button onClick={() => addProduct(product.id)}>Add</button>
-            </li>
-            ))}
-        </ul>
-        <br></br>
             <ul>
-            {cart.map(product => (
-            <li key={product.id}>
-                {product.name} - ${product.price}
-            </li>
-            ))}
-        </ul>
+                {products.map(product => (
+                <li key={product.id}>
+                    {product.name} - ${product.price}
+                    <button onClick={() => addProduct(product.id)}>Add</button>
+                </li>
+                ))}
+            </ul>
         </div>
     );
 }

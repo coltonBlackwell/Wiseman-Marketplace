@@ -1,16 +1,10 @@
 import { Request, Response } from 'express';
 import { products, Product } from './productController.js'
 
-// interface Product {
-//   id: number;
-//   name: string;
-//   price: number;
-// }
 
 let cart: Product[] = [
   //starts with an empty cart
 ];
-
 
 export const addProduct = (req: Request, res: Response) => {
 
