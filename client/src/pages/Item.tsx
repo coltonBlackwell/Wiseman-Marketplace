@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { Product } from './Home';
-import { Link } from 'react-router-dom';
 
 interface ItemProps {
   products: Product[];
@@ -11,7 +10,6 @@ interface ItemProps {
 }
 
 function Item({ products, setProducts, cart, setCart }: ItemProps) {
-
   const { id } = useParams<{ id: string }>();
   const product = products.find(p => p.id === Number(id));
 
@@ -25,7 +23,12 @@ function Item({ products, setProducts, cart, setCart }: ItemProps) {
     })
       .then(res => res.json())
       .then(data => {
-        setCart(data.cart); // update cart state
+        setCart(data.cart); // Update cart state
+        setProducts(prev =>
+          prev.map(p =>
+            p.id === product.id ? { ...p, inCart: true } : p
+          )
+        ); // Update inCart for this product
       })
       .catch(err => console.error('Error adding to cart:', err));
   };
@@ -34,9 +37,11 @@ function Item({ products, setProducts, cart, setCart }: ItemProps) {
     <div>
       <h2>{product.name}</h2>
       <p>Price: ${product.price}</p>
-      <button onClick={addToCart}>Add to Cart</button>
-      <br></br>
-      <Link to={`/`}>go back</Link>
+      <button onClick={addToCart} disabled={product.inCart}>
+        {product.inCart ? 'In Cart' : 'Add to Cart'}
+      </button>
+      <br />
+      <Link to="/">Go back</Link>
     </div>
   );
 }

@@ -6,6 +6,8 @@ import './output.css';
 import { useEffect, useState } from 'react';
 import { Product } from './pages/Home'; // Make sure this is exported in Home.tsx
 import Item from './pages/Item';
+import Auth0ProviderWithHistory from './auth0-provider-with-history';
+import Profile from './pages/Profile';
 
 function App() {
   const [cart, setCart] = useState<Product[]>([]);
@@ -20,13 +22,16 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
-      <br />
-      <Routes>
-        <Route path="/" element={<Home products={products} setProducts={setProducts} setCart={setCart} />} />
-        <Route path="/:id" element={<Item products={products} setProducts={setProducts} cart={cart} setCart={setCart} />} />
-        <Route path="/checkout" element={<Checkout cart={cart} setCart={setCart} />} />
-      </Routes>
+      <Auth0ProviderWithHistory>
+        <Navbar />
+        <br />
+          <Routes>
+            <Route path="/" element={<Home products={products} setProducts={setProducts} setCart={setCart} />} />
+            <Route path="/:id" element={<Item products={products} setProducts={setProducts} cart={cart} setCart={setCart} />} />
+            <Route path="/checkout" element={<Checkout cart={cart} setCart={setCart} />} />
+            <Route path="/profile" element={<Profile/>} />
+          </Routes>
+      </Auth0ProviderWithHistory>
     </Router>
   );
 }

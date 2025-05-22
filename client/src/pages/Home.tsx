@@ -5,6 +5,7 @@ export interface Product {
   id: number;
   name: string;
   price: number;
+  inCart: boolean;
 }
 
 interface HomeProps {
@@ -25,13 +26,15 @@ function Home({ products, setProducts, setCart }: HomeProps) {
         .catch(err => console.error('Error:', err));
     }, []);
 
+    // TODO: Once the item has been sold, replace View Link with SOLD (add faded effects).
+
     return (
         <div>
             <ul>
                 {products.map(product => (
                 <li key={product.id}>
                     {product.name} - ${product.price}
-                    <Link to={`/${product.id}`}>View</Link>
+                    <Link to={`/${product.id}`}>View</Link> 
                 </li>
                 ))}
             </ul>

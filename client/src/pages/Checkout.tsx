@@ -36,22 +36,18 @@ export function Checkout({ cart, setCart }: CheckoutProps) {
             .catch(err => console.error('Error:', err));
     };
 
-    // ✅ defensive check before rendering
-    if (!cart || !Array.isArray(cart)) {
-        return <div>Loading cart...</div>;
-    }
+
 
     return (
     <div>
         <ul>
-            {cart.map((product, index) => (
-            <li key={`${product.id}-${index}`}> 
+            {cart.map(product => (
+            <li key={product.id}>
                 {product.name} - ${product.price}
                 <button onClick={() => removeProduct(product.id)}>Remove</button>
             </li>
             ))}
         </ul>
-
     </div>
     );
 }
