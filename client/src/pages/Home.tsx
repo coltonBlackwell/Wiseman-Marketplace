@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import './output.css';
  
 export interface Product {
   id: number;
@@ -14,7 +13,6 @@ interface HomeProps {
 function Home({ setCart }: HomeProps) {
 
     const [products, setProducts] = useState<Product[]>([]); // <-- typed array
-    // const [cart, setCart] = useState<Product[]>([]); // <-- typed array
 
 
     // init show products on display when loading the page.
@@ -31,17 +29,17 @@ function Home({ setCart }: HomeProps) {
         fetch(`http://localhost:4000/api/cart/${id}`, {
             method: 'POST',
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to add product to cart');
-                }
-                return response.json();
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to add product to cart');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Cart updated:', data.cart);
+            setCart(data.cart);
             })
-            .then(data => {
-                console.log('Cart updated:', data.cart);
-                setCart(data.cart); // ✅ Update cart state here
-                })
-            .catch(err => console.error('Error:', err));
+        .catch(err => console.error('Error:', err));
     };
 
     return (

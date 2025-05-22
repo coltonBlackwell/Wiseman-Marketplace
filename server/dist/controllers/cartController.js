@@ -1,9 +1,4 @@
 import { products } from './productController.js';
-// interface Product {
-//   id: number;
-//   name: string;
-//   price: number;
-// }
 let cart = [
 //starts with an empty cart
 ];
@@ -15,6 +10,19 @@ export const addProduct = (req, res) => {
     // Add to cart
     cart.push(productToAdd);
     res.json({ message: 'Product added to cart successfully', cart });
+};
+export const removeProduct = (req, res) => {
+    console.log('you hit the backend!!');
+    // console.log("***** REQ PARAMS ********", req.params.id)
+    // const id = Number(req.params.id);
+    // const index = cart.findIndex(product => product.id === id);
+    // console.log("*****CART SPLIIIICE *******", cart.splice(index, 1))
+    const id = Number(req.params.id);
+    const index = cart.findIndex(product => product.id === id);
+    if (index !== -1) {
+        cart.splice(index, 1); // ✅ Modify shared array
+    }
+    res.json({ message: 'Product removed successfully', cart });
 };
 export const getCart = (_req, res) => {
     res.json(cart);

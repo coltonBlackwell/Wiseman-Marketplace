@@ -21,6 +21,16 @@ export const addProduct = (req: Request, res: Response) => {
   res.json({ message: 'Product added to cart successfully', cart });
 };
 
+export const removeProduct = (req: Request, res: Response) => {
+
+  const id = Number(req.params.id);
+  const index = cart.findIndex(product => product.id === id);
+  if (index !== -1) {
+    cart.splice(index, 1); // ✅ Modify shared array
+  }
+  res.json({ message: 'Product removed successfully' , cart});
+};
+
 export const getCart = (_req: Request, res: Response) => {
   res.json(cart);
 };
