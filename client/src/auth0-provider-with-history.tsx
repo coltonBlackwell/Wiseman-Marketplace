@@ -12,8 +12,6 @@ const Auth0ProviderWithHistory: React.FC<Props> = ({ children }) => {
   const domain = process.env.REACT_APP_AUTH0_DOMAIN!;
   const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID!;
 
-  console.log("DOMAIN!!!", domain)
-
   const onRedirectCallback = (appState: any) => {
     navigate(appState?.returnTo || "/");
   };

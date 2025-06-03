@@ -1,14 +1,18 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const LoginButton = () => {
+interface LoginButtonProps {
+  className?: string;
+}
+
+const LoginButton: React.FC<LoginButtonProps> = ({ className = "" }) => {
   const { loginWithRedirect } = useAuth0();
 
   return (
     <button
       onClick={() => loginWithRedirect()}
       id="qsLoginBtn"
-      className="btn-margin"
+      className={`btn-margin ${className}`}
     >
       Log in
     </button>
