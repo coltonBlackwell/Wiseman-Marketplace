@@ -58,27 +58,35 @@ export function Checkout({ cart, setCart }: CheckoutProps) {
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           {/* Cart Items Table */}
           <div className="divide-y divide-gray-200">
-            {/* Table Header */}
+            {/* Table Header - Desktop Only */}
             <div className="hidden md:grid grid-cols-12 bg-teal-600 text-white p-4">
-              <div className="col-span-8 font-medium">Product</div>
-              <div className="col-span-2 font-medium text-right">Price</div>
-              <div className="col-span-2 font-medium text-right">Action</div>
+              <div className="col-span-6 md:col-span-8 font-medium">Product</div>
+              <div className="col-span-3 md:col-span-2 font-medium text-right">Price</div>
+              <div className="col-span-3 md:col-span-2 font-medium text-right">Action</div>
             </div>
             
             {/* Cart Items */}
             {cart.map(product => (
-              <div key={product.id} className="grid grid-cols-12 p-4 hover:bg-teal-50 transition-colors">
-                <div className="col-span-8 flex items-center">
+              <div key={product.id} className="grid grid-cols-6 md:grid-cols-12 p-4 hover:bg-teal-50 transition-colors">
+                {/* Product Name - Full width on mobile, 8 cols on desktop */}
+                <div className="col-span-3 md:col-span-8 flex items-center">
                   <span className="font-medium text-teal-800">{product.name}</span>
                 </div>
-                <div className="col-span-2 text-gray-700 flex items-center justify-end md:justify-end">
-                  ${product.price.toFixed(2)}
+                
+                {/* Price - Right aligned with label on mobile */}
+                <div className="col-span-3 md:col-span-2 flex items-center justify-end">
+                  <div className="flex flex-col md:block">
+                    <span className="md:hidden text-xs text-gray-500">Price</span>
+                    <span className="text-gray-700">${product.price.toFixed(2)}</span>
+                  </div>
                 </div>
-                <div className="col-span-2 flex items-center justify-end">
+                
+                {/* Remove Button - Full width on mobile, 2 cols on desktop */}
+                <div className="col-span-6 mt-2 md:mt-0 md:col-span-2 flex items-center justify-end">
                   <button
                     onClick={() => removeProduct(product.id)}
                     disabled={isRemoving === product.id}
-                    className={`px-3 py-1 rounded-md text-sm font-medium ${
+                    className={`w-full md:w-auto px-3 py-1 rounded-md text-sm font-medium ${
                       isRemoving === product.id
                         ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
                         : 'bg-red-100 text-red-700 hover:bg-red-200'
