@@ -102,6 +102,22 @@ function Item({ products, setProducts, cart, setCart }: ItemProps) {
           <h2 className="text-3xl font-bold text-gray-900">{product.name}</h2>
           <p className="text-2xl text-teal-600">${product.price.toFixed(2)}</p>
 
+          {/* Details as bullet points */}
+          {product.details && (
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Product Details:</h3>
+              <ul className="list-disc list-inside text-gray-700 space-y-1">
+                {product.details
+                  .split('-')
+                  .map(detail => detail.trim())
+                  .filter(Boolean)
+                  .map((detail, index) => (
+                    <li key={index}>{detail}</li>
+                  ))}
+              </ul>
+            </div>
+          )}
+
           <button
             onClick={addToCart}
             disabled={product.inCart}

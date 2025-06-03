@@ -6,6 +6,7 @@ export interface Product {
   name: string;
   price: number;
   inCart: boolean;
+  details: string;
   imageUrl: string;
   featurePhoto1: string;
   featurePhoto2: string;
