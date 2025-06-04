@@ -10,7 +10,7 @@ export function Checkout({ cart, setCart }: CheckoutProps) {
   const [isRemoving, setIsRemoving] = useState<number | null>(null);
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/cart')
+    fetch('https://wiseman-marketplace.onrender.com/api/cart')
       .then(response => response.json())
       .then((cart: Product[]) => {
         setCart(cart);
@@ -20,7 +20,7 @@ export function Checkout({ cart, setCart }: CheckoutProps) {
 
   const removeProduct = (id: number) => {
     setIsRemoving(id);
-    fetch(`http://localhost:4000/api/cart/${id}`, {
+    fetch(`https://wiseman-marketplace.onrender.com/api/cart/${id}`, {
       method: 'DELETE',
     })
       .then(response => {

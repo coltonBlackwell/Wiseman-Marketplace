@@ -20,14 +20,14 @@ interface HomeProps {
 
 function Home({ products, setProducts, setCart }: HomeProps) {
   useEffect(() => {
-    fetch('http://localhost:4000/api/products')
+    fetch('https://wiseman-marketplace.onrender.com/api/products')
       .then(response => response.json())
       .then((products: Product[]) => {
         // Ensure all products have imageUrl with full path
         const productsWithImages = products.map(product => ({
           ...product,
           imageUrl: product.imageUrl 
-            ? `http://localhost:4000${product.imageUrl}`
+            ? `https://wiseman-marketplace.onrender.com${product.imageUrl}`
             : '/placeholder-product.jpg'
         }));
         setProducts(productsWithImages);

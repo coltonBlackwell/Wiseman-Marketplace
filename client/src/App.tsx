@@ -14,7 +14,7 @@ function App() {
   const [products, setProducts] = useState<Product[]>([]); // <-- typed array
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/cart')
+    fetch('https://wiseman-marketplace.onrender.com/api/cart')
       .then(res => res.json())
       .then((cart: Product[]) => setCart(cart))
       .catch(err => console.error('Error fetching cart:', err));

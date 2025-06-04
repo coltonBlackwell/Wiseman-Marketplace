@@ -20,7 +20,7 @@ function Item({ products, setProducts, cart, setCart }: ItemProps) {
   }
 
   const addToCart = () => {
-    fetch(`http://localhost:4000/api/cart/${product.id}`, {
+    fetch(`https://wiseman-marketplace.onrender.com/api/cart/${product.id}`, {
       method: 'POST',
     })
       .then(res => res.json())
@@ -39,10 +39,10 @@ function Item({ products, setProducts, cart, setCart }: ItemProps) {
     product.imageUrl,
     product.featurePhoto1?.startsWith('http') 
       ? product.featurePhoto1 
-      : `http://localhost:4000${product.featurePhoto1}`,
+      : `https://wiseman-marketplace.onrender.com${product.featurePhoto1}`,
     product.featurePhoto2?.startsWith('http') 
       ? product.featurePhoto2 
-      : `http://localhost:4000${product.featurePhoto2}`
+      : `https://wiseman-marketplace.onrender.com${product.featurePhoto2}`
   ].filter(Boolean);
 
   const handleThumbnailClick = (index: number) => {
