@@ -11,27 +11,39 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// Configure CORS (adjust allowed origins as needed)
+// ================== CRITICAL FIXES ================== //
+// 1. CORS Configuration (Render + Localhost)
 app.use(cors({
   origin: [
-    "https://wiseman-marketplace-1.onrender.com", // Your frontend URL (if hosted)
-    "http://localhost:4000",            // Local dev frontend
+    "https://wiseman-marketplace-1.onrender.com", // Frontend (NO trailing slash!)
+    "http://localhost:3000",                      // Frontend dev server
   ],
-  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],      // Allowed methods
+  credentials: true,                              // Enable cookies/auth if needed
 }));
 
+// 2. Body Parser Middleware
 app.use(express.json());
 
-// API Routes
+// 3. API Routes
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 
-// Serve static files (adjust path if needed)
-app.use('/images', express.static(path.join(__dirname, '..', 'public', 'images')));
+// 4. Static Files (Fix path for Render)
+app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
 
-// Use Render's PORT or fallback to 4000 for local dev
+// 5. Health Check Endpoint (Required for Render)
+app.get('/', (req, res) => {
+  res.status(200).send('Backend is live!');
+});
+
+// 6. Handle 404 Errors (Catch-all route)
+app.use((req, res) => {
+  res.status(404).json({ error: 'Route not found' });
+});
+
+// ================== SERVER START ================== //
 const PORT = process.env.PORT || 4000;
-
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
