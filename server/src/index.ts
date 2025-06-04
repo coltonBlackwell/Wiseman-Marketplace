@@ -14,7 +14,7 @@ const app = express();
 // Configure CORS (adjust allowed origins as needed)
 app.use(cors({
   origin: [
-    "https://wiseman-marketplace-1.onrender.com/", // Your frontend URL (if hosted)
+    "https://wiseman-marketplace-1.onrender.com", // Your frontend URL (if hosted)
     "http://localhost:4000",            // Local dev frontend
   ],
   credentials: true,
